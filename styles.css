@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+:root {
+    --background: #1e1e2e;
+    --borders: #313244;
+    --borders-emph: #45475a;
+    --button: #cdd6f4;
+    --button-text: #333546;
+    --text: #9399b2;
+    --text2: #6272a4;
+    --link: #74b8c7;
+    --link-visited: #ffffff;
+    --highlight_r: #f38ba8;
+    --highlight_o: #fab387;
+    --highlight_y: #f9e2af;
+    --highlight_g: #a6e3a1;
+    --highlight_b: #89b4fa;
+    --border-radius: 5px;
+    --border-width: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2em;
+}
+
+:root {
+    --text-padding: 22px;
+}
+
+pre {
+    background-color: black !important;
+    padding: 20px !important;
+    display: block !important;
+    width: 90% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+}
+
+pre code {
+    background-color: transparent !important;
+    font-size: 1.1em;
+    padding: 0 !important;
+    display: block !important;
+    width: 90% !important;
+}
+
+/* Why do i have to do this to get the font sized properly ? h1/2 apply correctly */
+:root h3 { font-size: 1.15em; }
+/* :root h4 { font-size: 1.1em; } */
+
+
+details { margin-top: 20px; margin-bottom: 10px; cursor: pointer; }
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    padding: 1%;
+}
+
+/* why does this not apply to the options on select ? */
+select {
+    border: var(--border-width) solid var(--borders);
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 5px;
+}
+
+
+input {
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+button {
+    background-color: var(--button);
+    color: var(--button-text);
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    border-radius: 0px;
+    padding: 5px;
+    margin: 10px;
+}
+button:hover { text-decoration: underline }
+button:active { font-weight: bold; }
+
+h1 { color: var(--highlight_b); }
+h2 { color: var(--highlight_g); }
+h3 { color: var(--highlight_r); }
+h4 { color: var(--highlight_o); }
+
+a { color: var(--link); cursor: pointer; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+hr { background-color: var(--borders); border: none; border-radius: var(--border-radius); width: 90%; height: 3px; }
+
+.container {
+    border: var(--border-width) solid var(--borders);
+    border-radius: var(--border-radius);
+    margin: 30px 5px 10px 5px;
+    padding: 7px;
+}
+.container-title {
+    position: relative;
+    top: -27px;
+    left: 30px;
+    background-color: var(--background);
+    padding: 5px 10px 5px 10px;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+}
+
+.notes-list-container {
+    margin: 0px 0px 5px 0px;
+    width: 25%;
+    padding-right: 40px;
+    border: var(--border-width) solid var(--borders);
+    padding: 0px 5px 5px 10px;
+    font-size: 0.7em;
+    min-height: 30vh;
+
+}
+.notes-list-container h2 { font-size: 1.7em; padding: 20px 0px 20px 0px; margin: 0px; }
+.note-structure          { font-size: 1.7em; padding: 20px 0px 20px 0px; margin: 0px; }
+
+.note-display {
+    width: 90%;
+    font-size: 0.8em;
+    padding-right: var(--text-padding);
+}
+.note-display img { max-width: 90%; }
+.note-display > *:not(table):not(hr):not(img):not(ul):not(ol) { padding-left: var(--text-padding); padding-right: var(--text-padding); }
+.note-display ul, .note-display ol {
+    padding-left: calc(var(--text-padding) + 30px);
+}
+
+.note-structure {
+    width: 25%;
+    border: var(--border-width) solid var(--borders);
+    font-size: 0.7em;
+    padding: 5px;
+    height: fit-content;
+    padding-top: 0px; 
+    min-height: 30vh;
+}
+
+.note-structure li {
+    margin: 5px 0px 5px 0px;
+    position:relative;
+    left: -5px;
+
+}
+.note-structure h2 { font-size: 1.7em; }
+.note-structure :not([class]) { padding-inline-start: 10px; list-style: none; } 
+.note-structure a { text-decoration: none; }
+
+/* really ugly way to make the table of contents start closer to the left side of the block */
+.note-structure .toc, .note-structure .toc > ul { padding-inline-start: 0px; padding-left: 0px; }
+
+.toc-link { transition: transform 0.5s ease-in-out;}
+.note-structure li::before {
+    content: "→ "; /* change to whatever you like: "•", "✔", "➤", etc. */
+}
+.note-structure, .notes-list-container {
+    position: sticky;      /* or fixed */
+    top: 0;
+    max-height: 95vh;
+    overflow-y: auto;
+}
+
+.note-display-centerer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%; /* ??? */
+    color: white;
+}
+
+.note { text-decoration: none; cursor: pointer; margin-bottom: 10px; }
+
+.centerer {
+    display: flex;
+    justify-content: center;
+}
+
+.block-quote {
+    border-left: calc(var(--border-width) * 2) solid var(--borders);
+    padding-left: 10px;
+    border-radius: 2px;
+}
