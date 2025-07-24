@@ -1,9 +1,17 @@
 {
     "Year 3": [
-        "File System Interfaces.md",
-        "Inter VLAN Routing.md",
-        "Operating Systems.md",
-        "Synchronization.md",
-        "VLANs.md"
+        {
+            "Networking": [
+                "Inter VLAN Routing.md",
+                "VLANs.md"
+            ]
+        },
+        {
+            "OS": [
+                "File System Interfaces.md",
+                "Operating Systems.md",
+                "Synchronization.md"
+            ]
+        }
     ]
 }

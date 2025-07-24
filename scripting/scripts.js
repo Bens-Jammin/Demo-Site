@@ -2,6 +2,38 @@
 document.addEventListener('DOMContentLoaded', () => parseNoteTree());
 
 
+
+
+
+
+function onScroll() {
+    const tocLinks = document.querySelectorAll("#toc a");
+    const headers = Array.from(tocLinks).map(link => {
+        const id = link.getAttribute('href').slice(1);
+
+        return document.getElementById(id);
+    })
+
+    let activeIndex = headers.length - 1;
+    
+    for (let i = 0; i < headers.length; i++) {
+        const rect = headers[i].getBoundingClientRect();
+        if (rect.top > 0) {
+            activeIndex = i === 0 ? 0 : i - 1;
+            break;
+        }
+    }
+
+
+
+    tocLinks.forEach(link => link.classList.remove('active'));
+    tocLinks[activeIndex]?.classList.add('active');
+    toc
+}
+
+window.addEventListener('scroll', onScroll);
+
+
 async function parseNoteTree() {
     try {
         let html = "";
@@ -19,14 +51,35 @@ async function parseNoteTree() {
         }
        
         for (let [k, v] of Object.entries(data)) {
-            if (!Array.isArray(v)) { continue; }
+            if (!Array.isArray(v)) continue;
 
             html += `<details><summary><strong>${k}</strong></summary><ul>`;
+            
             for (let note of v) {
-                html += `<li class="note" id="${k}/${note}">${note.replace(".md", "")}</li>`;
+                if (typeof note === 'object' && note !== null) { 
+                    let entries = Object.entries(note);
+                    if (entries.length === 0) continue;
+
+                    let [directoryName, subdirectory] = entries[0];
+                    if (typeof subdirectory === 'string') {
+                        subdirectory = subdirectory.split(',');
+                    } else if (!Array.isArray(subdirectory)) {
+                        continue;
+                    }
+
+                    html += `<details><summary><strong>${directoryName}</strong></summary><ul>`;
+                    for (let subnote of subdirectory) {
+                        html += `<li class="note" id="${k}/${directoryName}/${subnote}">${subnote.replace(".md", "")}</li>`;
+                    }
+                    html += "</ul></details>";
+                } else {
+                    html += `<li class="note" id="${k}/${note}">${note.replace(".md", "")}</li>`;
+                }
             }
+
             html += "</ul></details>";
         }
+
         html += "</ul>";
         notesSection.innerHTML += html;
 
@@ -45,8 +98,6 @@ async function parseNoteTree() {
                     const output = marked.parse(markdownText);
 
                     let styledOutput = addStyling(output);
-
-                    console.log(styledOutput)
                     
                     let htmlOutput = ""
                     if (styledOutput === "") {
@@ -140,13 +191,6 @@ function tableOfContents(htmlString) {
     return toc;
 }
 
-output = output.replace(/<(h[1-6])([^>]*)>(.*?)<\/(h[1-6])>/gi, (match, openTag, attributes, content, closeTag) => {
-    // Determine how many # symbols based on header level
-    const level = parseInt(openTag.charAt(1));
-    const symbols = '#'.repeat(level);
-    
-    return `<${openTag}${attributes}>${symbols} ${content}</${closeTag}>`;
-});
 
 function addStyling(html) {
     
@@ -155,9 +199,10 @@ function addStyling(html) {
         const level = parseInt(openTag.charAt(1));
         const symbols = '#'.repeat(level);
         
-        return `<${openTag}${attributes}>${symbols} ${content}</${closeTag}>`;
+        return `<${openTag}${attributes} id="${content.replaceAll(" ", "-")}" >${symbols} ${content}</${closeTag}>`;
     });
 
+    
     // center the images
     output = output.replace(/<img([^>]*)>/gi, (match, attributes) => {
         return `<div class="centerer"><img${attributes}></div>`;

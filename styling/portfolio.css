@@ -1,0 +1,11 @@
+.portfolio-content {
+    border: var(--border-width) solid var(--borders);
+    display: grid;
+    margin: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 5px;
+}
+
+.portfolio-content p {
+    border: var(--border-width) solid var(--borders);
+}

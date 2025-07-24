@@ -82,13 +82,14 @@ button {
     padding: 5px;
     margin: 10px;
 }
+
 button:hover { text-decoration: underline }
 button:active { font-weight: bold; }
 
 h1 { color: var(--highlight_b); }
 h2 { color: var(--highlight_g); }
-h3 { color: var(--highlight_r); }
-h4 { color: var(--highlight_o); }
+h3 { color: var(--highlight_o); }
+h4 { color: var(--highlight_r); }
 
 a { color: var(--link); cursor: pointer; text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -122,6 +123,7 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
     padding: 0px 5px 5px 10px;
     font-size: 0.7em;
     min-height: 30vh;
+    color: var(--text2);
 
 }
 .notes-list-container h2 { font-size: 1.7em; padding: 20px 0px 20px 0px; margin: 0px; }
@@ -138,6 +140,23 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
     padding-left: calc(var(--text-padding) + 30px);
 }
 
+/* .note-display h1 { 
+    margin: 5px; 
+    padding: 15px 0px 15px 0px; 
+    background-color: var(--background); 
+    position: sticky; 
+    top: 1px; 
+    border: var(--border-width) solid var(--borders-emph);
+} */
+.note-display h2 { 
+    padding: 26px 0px 15px 0px; 
+    background-color: var(--background); 
+    position: sticky; 
+    top: 0px; 
+    /* width: 97.2%; */
+    /* border-bottom: var(--border-width) solid var(--borders); */
+}
+
 .note-structure {
     width: 25%;
     border: var(--border-width) solid var(--borders);
@@ -146,17 +165,17 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
     height: fit-content;
     padding-top: 0px; 
     min-height: 30vh;
+    color: var(--text2);
 }
 
 .note-structure li {
     margin: 5px 0px 5px 0px;
     position:relative;
     left: -5px;
-
 }
 .note-structure h2 { font-size: 1.7em; }
-.note-structure :not([class]) { padding-inline-start: 10px; list-style: none; } 
-.note-structure a { text-decoration: none; }
+.note-structure :not([class]) { padding-inline-start: 13px; list-style: none; } 
+.note-structure a { text-decoration: none; color: var(--text2); }
 
 /* really ugly way to make the table of contents start closer to the left side of the block */
 .note-structure .toc, .note-structure .toc > ul { padding-inline-start: 0px; padding-left: 0px; }
@@ -165,9 +184,12 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
 .note-structure li::before {
     content: "→ "; /* change to whatever you like: "•", "✔", "➤", etc. */
 }
+.notes-list-container details { margin: 0px; }
+.notes-list-container summary { margin: 0px 0px 10px 0px; }
+.notes-list-container ul { padding-left: 20px; margin: 0px; }
 .note-structure, .notes-list-container {
     position: sticky;      /* or fixed */
-    top: 0;
+    top: 5px;
     max-height: 95vh;
     overflow-y: auto;
 }
@@ -191,4 +213,10 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
     border-left: calc(var(--border-width) * 2) solid var(--borders);
     padding-left: 10px;
     border-radius: 2px;
+}
+
+#toc a.active {
+  font-weight: bolder;
+  color: var(--highlight_b);
+  text-shadow: 0 0 8px var(--text2);
 }
