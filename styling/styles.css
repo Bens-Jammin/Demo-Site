@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 :root {
     --background: #1e1e2e;
+    --background2: #2e2e3e;
     --borders: #313244;
     --borders-emph: #45475a;
     --button: #cdd6f4;
@@ -24,21 +25,20 @@
     --text-padding: 22px;
 }
 
-pre {
-    background-color: black !important;
-    padding: 20px !important;
-    display: block !important;
-    width: 90% !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
+/* Any <pre> with a direct <code> child  */
+pre:has(> code) { 
+    margin-left: auto;
+    margin-right: auto;
 }
 
 pre code {
-    background-color: transparent !important;
+    background-color: var(--background2);
     font-size: 1.1em;
-    padding: 0 !important;
-    display: block !important;
-    width: 90% !important;
+    padding: 7px;
+    display: block ;
+    width: 90% ;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Why do i have to do this to get the font sized properly ? h1/2 apply correctly */
@@ -51,7 +51,8 @@ details { margin-top: 20px; margin-bottom: 10px; cursor: pointer; }
 body {
     background-color: var(--background);
     color: var(--text);
-    padding: 1%;
+    padding: 0px 15px 15px 15px;
+    min-height: 1500px;
 }
 
 /* why does this not apply to the options on select ? */
@@ -96,6 +97,21 @@ a:hover { text-decoration: underline; }
 
 hr { background-color: var(--borders); border: none; border-radius: var(--border-radius); width: 90%; height: 3px; }
 
+nav {
+    width: 100%;
+    border: var(--border-width) solid var(--borders);
+    margin: 0px; 
+    padding: 8px 5px 8px 5px;
+    font-size: 1.05em ;
+}
+
+table, th, td {
+    border: var(--border-width) solid var(--borders);
+    border-collapse: collapse;
+}
+th { padding: 4px; }
+td { padding: 2px; }
+
 .container {
     border: var(--border-width) solid var(--borders);
     border-radius: var(--border-radius);
@@ -127,7 +143,7 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
 
 }
 .notes-list-container h2 { font-size: 1.7em; padding: 20px 0px 20px 0px; margin: 0px; }
-.note-structure          { font-size: 1.7em; padding: 20px 0px 20px 0px; margin: 0px; }
+.note-structure h2       { font-size: 1.7em; padding: 20px 0px 20px 0px; margin: 0px; }
 
 .note-display {
     width: 90%;
@@ -136,9 +152,9 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
 }
 .note-display img { max-width: 90%; }
 .note-display > *:not(table):not(hr):not(img):not(ul):not(ol) { padding-left: var(--text-padding); padding-right: var(--text-padding); }
-.note-display ul, .note-display ol {
-    padding-left: calc(var(--text-padding) + 30px);
-}
+.note-display ul, .note-display ol { padding-left: calc(var(--text-padding) + 30px); }
+.note-display table { margin-left: auto; margin-right: auto; }
+.note-display td strong { color: var(--text2) }
 
 /* .note-display h1 { 
     margin: 5px; 
@@ -174,7 +190,7 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
     left: -5px;
 }
 .note-structure h2 { font-size: 1.7em; }
-.note-structure :not([class]) { padding-inline-start: 13px; list-style: none; } 
+.note-structure :not([class], h2) { padding-inline-start: 13px; list-style: none; } 
 .note-structure a { text-decoration: none; color: var(--text2); }
 
 /* really ugly way to make the table of contents start closer to the left side of the block */
@@ -219,4 +235,21 @@ hr { background-color: var(--borders); border: none; border-radius: var(--border
   font-weight: bolder;
   color: var(--highlight_b);
   text-shadow: 0 0 8px var(--text2);
+}
+
+
+.tag-container .jazz {
+    background-color: var(--highlight_y);
+}
+
+.tag-container .rock {
+    background-color: var(--highlight_b);
+}
+
+.tag-container .metal {
+    background-color: var(--highlight_g);
+}
+
+.tag-container .other {
+    background-color: var(--highlight_o);
 }

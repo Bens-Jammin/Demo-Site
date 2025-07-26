@@ -3,7 +3,9 @@
         {
             "Networking": [
                 "Inter VLAN Routing.md",
-                "VLANs.md"
+                "VLANs.md",
+                "Routing Concepts.md",
+                "Static Routing.md"
             ]
         },
         {

@@ -1,8 +1,6 @@
 # Inter-VLAN Routing
 
-- - -
-
-## Inter-VLAN Routing Operation
+## Inter-VLAN Routing Operation 
 
 ### What is Inter-VLAN Routing
 
@@ -60,3 +58,120 @@ The following are advantages of using layer 3 switches for inter-VLAN routing:
 The only disadvantage to this solution is the price, layer 3 switches are expensive.
 
 ![A logical topology of a layer 3 switch inter-VLAN routing](./Images/Inter%20VLAN%20Routing%20-%20Layer%203%20Switch.png)
+
+
+## Configuration
+
+### Router-on-a-Stick
+
+We will setup a router-on-a-stick inter VLAN connection using this topology:
+
+![A logical topology of a Router-on-a-Stick inter-VLAN routing](./Images/Inter%20VLAN%20Routing%20-%20RoaS.png)
+
+Note that configuration for both switches are nearly identical, using the relative ip address and local VLANs instead.
+
+#### Step 1: Create an Name VLANs
+```
+S1(config)# vlan 10
+S1(config-vlan)# name LAN10
+S1(config-vlan)# exit
+S1(config)# vlan 20
+S1(config-vlan)# name LAN20
+S1(config-vlan)# exit
+S1(config)# vlan 99
+S1(config-vlan)# name Management
+S1(config-vlan)# exit
+S1(config)#
+```
+
+#### Step 2: Create the Management Interface
+```
+S1(config)# interface vlan 99
+S1(config-if)# ip add 192.168.99.2 255.255.255.0
+S1(config-if)# no shut
+S1(config-if)# exit
+S1(config)# ip default-gateway 192.168.99.1
+S1(config)#
+```
+
+#### Step 3: Configure Access Ports
+```
+S1(config)# interface fa0/6
+S1(config-if)# switchport mode access
+S1(config-if)# switchport access vlan 10
+S1(config-if)# no shut
+S1(config-if)# exit
+S1(config)#
+```
+
+#### Step 4: Configure Trunking Ports
+```
+S1(config)# interface fa0/1
+S1(config-if)# switchport mode trunk
+S1(config-if)# no shut
+S1(config-if)# exit
+S1(config)# interface fa0/5
+S1(config-if)# switchport mode trunk
+S1(config-if)# no shut
+S1(config-if)# end
+*Mar  1 00:23:43.093: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+*Mar  1 00:23:44.511: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/5, changed state to up
+```
+
+### Layer 3 Switch
+
+We will setup a layer 3 switch inter VLAN connection using this topology:
+
+![A logical topology of a layer 3 switch inter-VLAN routing](./Images/Inter%20VLAN%20Routing%20-%20Layer%203%20Switch.png)
+
+#### Step 1: Create the VLANs
+```
+D1(config)# vlan 10
+D1(config-vlan)# name LAN10
+D1(config-vlan)# vlan 20
+D1(config-vlan)# name LAN20
+D1(config-vlan)# exit
+D1(config)#
+```
+
+#### Step 2: Create the SVI VLAN Interfaces
+```
+D1(config)# interface vlan 10
+D1(config-if)# description Default Gateway SVI for 192.168.10.0/24
+D1(config-if)# ip add 192.168.10.1 255.255.255.0
+D1(config-if)# no shut
+D1(config-if)# exit
+D1(config)#
+D1(config)# int vlan 20
+D1(config-if)# description Default Gateway SVI for 192.168.20.0/24
+D1(config-if)# ip add 192.168.20.1 255.255.255.0
+D1(config-if)# no shut
+D1(config-if)# exit
+D1(config)#
+*Sep 17 13:52:16.053: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan10, changed state to up
+*Sep 17 13:52:16.160: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan20, changed state to up
+```
+
+#### Configure Access Ports
+```
+D1(config)# interface GigabitEthernet1/0/6
+D1(config-if)# description Access port to PC1
+D1(config-if)# switchport mode access
+D1(config-if)# switchport access vlan 10
+D1(config-if)# exit
+D1(config)#
+D1(config)# interface GigabitEthernet1/0/18
+D1(config-if)# description Access port to PC2
+D1(config-if)# switchport mode access
+D1(config-if)# switchport access vlan 20
+D1(config-if)# exit
+```
+
+#### Enable IP Routing
+
+This command allows traffic to be exchanged between the VLANs. This command must be configured to enable the inter-VLAN routing.
+
+```
+D1(config)# ip routing
+D1(config)#
+```
