@@ -1,10 +1,10 @@
-# File System Interfaces
-- - - 
+# File System Interface
+
 ## The File Concept
 
 ### File Attributes
 
-File attributes vary from one OS to another, but they generally contain the following: 
+File attributes vary from one OS to another, but they generally contain the following : 
 * **Name**: a string of characters to differentiate one from another. The only human-readable information stored
 * **Identifier**: a unique integer to identify one file from another 
 * **Type**: the type of information stored in the file
@@ -46,7 +46,7 @@ A user may want to erase the contents of the file, but maintain its attributes. 
 Some file types can be used to indicate the internal file structre. Source and object files have structures that match the expectations of the programs which read their contents. Some files must also conform to a structure that is understood by the OS (e.g. the OS requires that executables have a specific structure so that it can determine where in memeory to load the file, and what the location of the first instruction is).  
 
 One of the big disadvantages of having an OS support multiple file types is that the OS becomes large and cumbersome. If the OS defines five different file structures, it must contain code to support each of those file structures.
-- - - 
+
 ## Access Methods
 
 Files store information. When used, this information must be accessed and read into memory. The information in this file can be accessed in multiple ways. Some systems provide only one access method, and some (such as mainframe OSes) can support multiple methods. Choosing the right one for the job can be a major design decision
@@ -83,7 +83,7 @@ With large files, the index itself may become too large to be kept in memory. On
 
 ![An example of an indexed file access](./Images/IndexedFileAccess.png)
 
-- - - 
+
 ## Directory Structure
 
 The directory can be viewed as a symbol tabel which translates file names into the file control blocks. If we take this view, we can see the directory itself can be organized in multiple ways. The organization must allow us to insert and delete entries, search for named entries, and list all entries in the directory. 
@@ -162,7 +162,6 @@ Acyclic graph directories are more flexible than tree directories, but are more 
     * deletion may cause dangling pointers
     * simply deleting links could work, but how would you know when the last link was deleted?
 
-- - - 
 ## Protection
 
 When information is stored in computer systems, we want to keep it safe from both physical damage (reliability) and improper access (protection).
@@ -225,7 +224,6 @@ In a multilevel directory, we need to protect not only the files themselves but 
 * Whether or not a user can see the directory / know of its existence
 * Listing the contents of a directory (implied from the above point)
 
-- - - 
 ## Memory-Mapped Files
 
 There is one other method of accessing files which is very commonly used. Consider a sequential read of a file on disk using the system calls `open()`, `read()`, and `write()`. Each file access requires a system call and disk access. Alternatively, we can use virtual memory techniques to read file I/O as routine memory accesses. This approach - known as *memory mapping* - allows a part of the virtual address space to be logically associated with the file.

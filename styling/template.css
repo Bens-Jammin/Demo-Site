@@ -1,0 +1,12 @@
+:root {
+--dark-bkg: #010409;
+--dark-text-emph: #f0f6fc;
+--dark-text: #5f656d;
+--dark-highlight-1:#1158c6;
+--dark-highlight-2:#79c0ff;
+}
+
+b { color: var(--dark-text-emph) }
+a { color: var(--dark-highlight-2) }
+body { color: var(--dark-text) }
+h1, h2 { color: var(--dark-text-emph) }

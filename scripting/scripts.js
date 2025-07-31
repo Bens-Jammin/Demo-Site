@@ -152,7 +152,7 @@ function tableOfContents(htmlString) {
     const doc = parser.parseFromString(htmlString, 'text/html');
     const headers = doc.querySelectorAll('h1, h2, h3');
     
-    let toc = '<ul class="toc">\n';
+    let toc = '<ol class="toc">\n';
     let currentLevel = 0;
     
     headers.forEach((header, index) => {
@@ -165,21 +165,19 @@ function tableOfContents(htmlString) {
             header.id = id;
         }
         
-        // TODO: add numbering for items, e.g. (1) , ## 2.3 , > 2.3.4 , [4.5.6]
-
         if (level > currentLevel) {
             // Open new nested lists
             for (let i = currentLevel; i < level - 1; i++) {
-                toc += '  '.repeat(i + 1) + '<li><ul>\n';
+                toc += '  '.repeat(i + 1) + '<li><ol>\n';
             }
-            toc += '  '.repeat(level) + `<ul><li><a class="toc-link" href="#${id}">${text}</a></li>\n`;
+            toc += '  '.repeat(level) + `<ol><li><a class="toc-link" href="#${id}">${text}</a></li>\n`;
         } else if (level === currentLevel) {
             // Same level
             toc += '  '.repeat(level) + `<li><a class="toc-link" href="#${id}">${text}</a></li>\n`;
         } else {
             // Close nested lists
             for (let i = currentLevel; i > level; i--) {
-                toc += '  '.repeat(i) + '</ul></li>\n';
+                toc += '  '.repeat(i) + '</ol></li>\n';
             }
             toc += '  '.repeat(level) + `<li><a class="toc-link" href="#${id}">${text}</a></li>\n`;
         }
@@ -187,7 +185,7 @@ function tableOfContents(htmlString) {
         currentLevel = level;
     });
     
-    toc += '</ul>';
+    toc += '</ol>';
     return toc;
 }
 

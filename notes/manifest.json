@@ -1,19 +1,19 @@
 {
-    "Year 3": [
-        {
-            "Networking": [
-                "Inter VLAN Routing.md",
-                "VLANs.md",
-                "Routing Concepts.md",
-                "Static Routing.md"
-            ]
-        },
-        {
-            "OS": [
-                "File System Interfaces.md",
-                "Operating Systems.md",
-                "Synchronization.md"
-            ]
-        }
+    "Networking": [
+        "Application Layer.md",
+        "Inter VLAN Routing.md",
+        "Routing Concepts.md",
+        "Static Routing.md",
+        "Switching Concepts.md",
+        "VLANs.md"
+    ]
+    ,
+    "OS": [
+        "Context Switching.md",
+        "CPU Scheduling.md",
+        "File System Implementation.md",
+        "File System Interface.md",
+        "Processes.md",
+        "Synchronization.md"
     ]
 }

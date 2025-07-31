@@ -70,7 +70,9 @@ We will setup a router-on-a-stick inter VLAN connection using this topology:
 
 Note that configuration for both switches are nearly identical, using the relative ip address and local VLANs instead.
 
-#### Step 1: Create an Name VLANs
+#### Configure Switch 1
+
+**STEP 1: Create and Name VLANs**
 ```
 S1(config)# vlan 10
 S1(config-vlan)# name LAN10
@@ -83,8 +85,7 @@ S1(config-vlan)# name Management
 S1(config-vlan)# exit
 S1(config)#
 ```
-
-#### Step 2: Create the Management Interface
+**STEP 2: Create the Management Interface**
 ```
 S1(config)# interface vlan 99
 S1(config-if)# ip add 192.168.99.2 255.255.255.0
@@ -94,7 +95,7 @@ S1(config)# ip default-gateway 192.168.99.1
 S1(config)#
 ```
 
-#### Step 3: Configure Access Ports
+**STEP 3: Configure Access Ports**
 ```
 S1(config)# interface fa0/6
 S1(config-if)# switchport mode access
@@ -104,7 +105,7 @@ S1(config-if)# exit
 S1(config)#
 ```
 
-#### Step 4: Configure Trunking Ports
+**STEP 4: Configure Trunking Ports**
 ```
 S1(config)# interface fa0/1
 S1(config-if)# switchport mode trunk
@@ -116,6 +117,85 @@ S1(config-if)# no shut
 S1(config-if)# end
 *Mar  1 00:23:43.093: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
 *Mar  1 00:23:44.511: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/5, changed state to up
+```
+
+#### Configure Switch 2
+Configuring Switch 2 is similar to configuring Switch 1, we just change which interfaces we connect to and which ports are trunking ports.
+
+```
+S2(config)#
+    vlan 10
+        name LAN10
+        exit
+    vlan 20
+        name LAN20
+        exit
+    vlan 99
+        name Management
+        exit
+
+    interface vlan 99
+        ip add 192.168.99.3 255.255.255.0
+        no shut
+        exit
+    ip default-gateway 192.168.99.1
+    interface fa0/18
+        switchport mode access
+        switchport access vlan 20
+        no shut
+        exit
+    interface fa0/1
+        switchport mode trunk
+        no shut
+        exit
+        end
+```
+
+#### Configure Router Subinterfaces
+
+The router-on-a-stick method requires you to create a subinterface for each VLAN that is routed.
+
+A subinterface is created using the `interface {interface id}.{subinterface id}` command. Although not required, most of the time the subinterface id is the same as the VLAN number 
+
+Each subinterface is configured using the following commands:
+
+`encapsulation dot1q {vlan id} [native]` configures the subinterface to respond to 802.1Q encapsulated traffic. This is required because the 802.1Q standard enables VLANs to travel across ethernet networks, and is therefore a necessity for router-on-a-stick routing. The `native` keyword is only appended to set the native VLAN to something other than VLAN 1. More specifically, if you're trying to send native (raw) data to the router, the `native` keyword allows the router interface to accept the untagged data. Using a second interface would work all the same, but that would use up the limited number of interfaces the router has.
+
+`ip address {ip address} {subnet mask}` configures the IPv4 address of the subinterface. This is usually used as the default gateway for the VLAN.
+
+These commands are used foe each VLAN to be routed. Each router subinterace must be assigned an IP address on a unique subnet for routing.
+
+When all subinterfaces have been created, you can enable the physical interface using `no shutdown`. If the physical interface is not enabled, traffic can not be accepted by the router and therefore not properly routed.
+
+![A logical topology of a Router-on-a-Stick inter-VLAN routing](./Images/Inter%20VLAN%20Routing%20-%20RoaS.png)
+
+In the below configuration, the subinterfaces for Router 1's G0/0/1 interface (as seen above) are configured for VLANs 10, 20, and 99.
+
+```
+R1(config)#
+    interface G0/0/1.10
+        description Default-gateway for VLAN10
+        encapsulation dot1Q 10
+        ip address 192.168.10.1 255.255.255.0
+        exit
+
+    interface G0/0/1.20
+        description Default-gateway for VLAN20
+        encapsulation dot1Q 20
+        ip address 192.168.20.1 255.255.255.0
+        exit
+    
+    interface G0/0/1.99
+        description Default-gateway for VLAN99
+        encapsulation dot1Q 99
+        ip address 192.168.99.1 255.255.255.0
+        exit
+    
+    interface G0/0/1
+        description Trunk link to Switch1
+        switchport mode trunk
+        no shutdown
+        end
 ```
 
 ### Layer 3 Switch
@@ -134,7 +214,7 @@ D1(config-vlan)# exit
 D1(config)#
 ```
 
-#### Step 2: Create the SVI VLAN Interfaces
+#### Step 2: Create the SVI VLAN Interfaces.
 ```
 D1(config)# interface vlan 10
 D1(config-if)# description Default Gateway SVI for 192.168.10.0/24
