@@ -153,7 +153,7 @@ async function fetchNote(noteId, containerClass, ctime, mtime) {
         container.style = "border: var(--border-width) solid var(--borders);";
     
         // add content to the table of contents panel
-        let toc = document.getElementById("table-of-contents");
+        let toc = document.getElementById("toc-container");
         if (toc !== null) { toc.innerHTML = tableOfContents(htmlOutput); }
 
         container.innerHTML = htmlOutput;
@@ -187,7 +187,7 @@ function tableOfContents(htmlString) {
     const doc = parser.parseFromString(htmlString, 'text/html');
     const headers = doc.querySelectorAll('h1, h2, h3');
     
-    let toc = '<ul class="toc">\n';
+    let toc = '<ul class="toc menu-list">\n';
     let currentLevel = 0;
 
 
@@ -207,7 +207,7 @@ function tableOfContents(htmlString) {
             for (let i = currentLevel; i < level - 1; i++) {
                 toc += '  '.repeat(i + 1) + '<li><ul>\n';
             }
-            toc += '  '.repeat(level) + `<ul><li><a class="toc-link" href="#${id}">${text}</a></li>\n`;
+            toc += '  '.repeat(level) + `<ul class="toc-item menu-list level-${currentLevel+1}"><li><a class="toc-link" href="#${id}">${text}</a></li>\n`;
         } else if (level === currentLevel) {
             // Same level
             toc += '  '.repeat(level) + `<li><a class="toc-link" href="#${id}">${text}</a></li>\n`;
