@@ -80,7 +80,7 @@ h1, h2 { margin: 25px 10px 15px 0; color: var(--dark-text-emph); font-weight: 60
     margin: 5px;
     border-radius: 5px;
     padding: 3px 5px;
-    border: 1px solid green;
+    border: 2px solid grey;
 }
 
 .tag {
