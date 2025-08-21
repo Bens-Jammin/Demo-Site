@@ -128,7 +128,7 @@ async function fetchNote(noteId, containerClass, ctime, mtime) {
     let container = document.getElementById(containerClass);
 
     try {
-        const path = `./notes/${noteId}`.replace(/ /g, '%20'); // replace spaces with the space symbol
+        const path = `../notes/${noteId}`.replace(/ /g, '%20'); // replace spaces with the space symbol
         console.log("getting"+path);        
         
         const response = await fetch(path);
@@ -165,7 +165,7 @@ async function fetchNote(noteId, containerClass, ctime, mtime) {
 
 async function manifest() {
     try {
-        let manifest = "./notes/manifest.json";
+        let manifest = "../notes/manifest.json";
         let response = await fetch(manifest);
         
         // Fix: response.ok is a property, not a method
