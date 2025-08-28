@@ -129,7 +129,6 @@ async function fetchNote(noteId, containerClass, ctime, mtime) {
 
     try {
         const path = `../notes/${noteId}`.replace(/ /g, '%20'); // replace spaces with the space symbol
-        console.log("getting"+path);        
         
         const response = await fetch(path);
         if (!response.ok) {
@@ -138,7 +137,6 @@ async function fetchNote(noteId, containerClass, ctime, mtime) {
         
         const markdownText = await response.text();
         const output = marked.parse(markdownText);
-        console.log("got:\n"+output);
 
         let styledOutput = addStyling(output);
         
@@ -231,15 +229,6 @@ function tableOfContents(htmlString) {
 function addStyling(html, author, date) {
 
     let output = html
-
-    // output = output.replace(/<(h[1-6])([^>]*)>(.*?)<\/(h[1-6])>/gi, (match, openTag, attributes, content, closeTag) => {
-    //     // Determine how many # symbols based on header level
-    //     const level = parseInt(openTag.charAt(1));
-    //     const symbols = '#'.repeat(level);
-        
-    //     return `<${openTag}${attributes} id="${content.replaceAll(" ", "-")}" >${symbols} ${content}</${closeTag}>`;
-    // });
-
     let replaced = false; 
 
     output = output.replace(/<h1(\s[^>]*)?>[\s\S]*?<\/h1>/gi, (match) => {

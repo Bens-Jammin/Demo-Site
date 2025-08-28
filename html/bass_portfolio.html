@@ -3,8 +3,10 @@
     <head>
         <link href="../styling/portfolio.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
-        <script type="text/javascript" src="../scripting/note-script.js"></script>
-
+        <script type="text/javascript" src="../scripting/portfolio-parser.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => { load_bass_portfolio(); load_selector_with_bands(); })
+        </script>
     </head>
     <body style="padding: 0px 5px 5px 5px; margin: 0;">
         <!-- <nav style="height: 5vh; border: 1px solid black; width: 100%; margin-left: auto; margin-right: auto;">
@@ -13,49 +15,46 @@
         <div class="container">
             <div class="content" id="content">
                 <h1>Bass Portfolio</h1>
+                 
+                <div class="filter-sort">
+                    
+                    <div class="sort">
+                        <input type="radio" name="sort" value="band" id="sort-band" onchange="sort_bass_portfolio('bands')">
+                        <label for="sort-band">Sort by Band</label>
+                        <input type="radio" name="sort" value="tags" id="sort-tags" onchange="sort_bass_portfolio('tags')">
+                        <label for="sort-tags">Sort by Tag</label>
+                        <input type="radio" name="sort" value="title" id="sort-title" onchange="sort_bass_portfolio('title')">
+                        <label for="sort-title">Sort by Title</label>
+                    </div>
+                    
+                    <div class="filter">
+                        <!-- <h3>Filter by:</h3> -->
+                        <select class="filter" id="filterby-tags" onchange="filter_bass_portfolio(event, 'tags')">
+                            <option>All</option>
+                            <option>Deployed</option>
+                            <option>Progressing</option>
+                            <option>Delayed</option>
+                            <option>Secondary</option>
+                            <option>Deprecated</option>
+                            <option>Misc</option>
+                        </select>
+                        <div id="band-selector">
+                            <!-- A selector is dynamically loaded here for all unique bands in the portfolio -->
+                        </div>
+                    </div>
+                </div>
+            
+                <br>
+
                 <div class="portfolio-section">
                     <div class="column" id="col-1">
-                        <div class="portfolio-entry">
-                            <h2>Bobcaygeon</h2>
-                            <i><h4>The Tragically Hip</h4></i>
-                            <span class="tag" data-type="deployed"></span>
-                            <br>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>
-                        <div class="portfolio-entry">
-                            <h2>The Luxury</h2>
-                            <i><h4>The Tragically Hip</h4></i>
-                            <span class="tag" data-type="misc"></span>
-                            <br>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>
-                    
+                       
                     </div>
                     <div class="column" id="col-2">
-                        <div class="portfolio-entry">
-                            <h2>Little Bones</h2>
-                            <i><h4>The Tragically Hip</h4></i>
-                            <span class="tag" data-type="progressing"></span><br>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div> 
-                        
+                    
                     </div>
                     <div class="column" id="col-3">
-                        <div class="portfolio-entry">
-                            <h2>All Your Sins</h2>
-                            <i><h4>Pentagram</h4></i>
-                            <span class="tag" data-type="deprecated"></span>
-                            <br>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>              
+                     
                     </div>
                 </div>
             </div>
@@ -67,6 +66,8 @@
                     <li><a href="">Experience</a></li>
                     <li><a href="./bass_portfolio.html">Bass Portfolio</a></li>
                     <li><a href="./code_portfolio.html">Code Portfolio</a></li>
+                    <li><a href=./weekly_schedule.html>Weekly Schedule</a></li>
+                    <li><a href="./ideas.html">Lists</a></li>
                 </ul>
                 <h2>Contacts</h2>
                 <ul class="menu-list">

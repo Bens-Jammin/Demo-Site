@@ -4,8 +4,10 @@
         <link href="../styling/portfolio.css" rel="stylesheet">
         <!-- <link href="./styling/template.css" rel="stylesheet"> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
-        <script type="text/javascript" src="../scripting/note-script.js"></script>
-
+        <script type="text/javascript" src="../scripting/portfolio-parser.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => { load_code_portfolio(); })
+        </script>
     </head>
     <body style="padding: 0px 5px 5px 5px; margin: 0;">
         <!-- <nav style="height: 5vh; border: 1px solid black; width: 100%; margin-left: auto; margin-right: auto;">
@@ -14,74 +16,48 @@
         <div class="container">
             <div class="content" id="content">
                 <h1>Code Portfolio</h1>
-                <div class="portfolio-section">
-                    <div class="column" id="col-1">
-                        <div class="portfolio-entry">
-                            <h2>Sequel</h2>
-                            <i><h4>Rust</h4></i>
-                            <span class="tag" data-type="deployed"></span>
-                            <br>
-                            <p>Relational database written in pure rust, based on postgreSQL architecture. </p>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>
-                        <div class="portfolio-entry">
-                            <h2>Title</h2>
-                            <i><h4>Languages go here</h4></i>
-                            <span class="tag" data-type="misc"></span>
-                            <br>
-                            <p>brief description can go here</p>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>
+                
+                <div class="filter-sort">
                     
+                    <div class="sort">
+                        <input type="radio" name="sort" value="title" id="sort-title" onchange="sort_code_portfolio('title')">
+                        <label for="sort-title">Sort by Title</label>
+                        <input type="radio" name="sort" value="tags" id="sort-tags" onchange="sort_code_portfolio('tags')">
+                        <label for="sort-tags">Sort by Tag</label>
                     </div>
-                    <div class="column" id="col-2">
-                        <div class="portfolio-entry">
-                            <h2>Showcase Site</h2>
-                            <i><h4>HTML, CSS, JavaScript</h4></i>
-                            <span class="tag" data-type="progressing"></span><br>
-                            <!-- <p>Basic web page using vanilla HTML, CSS, and JS to organize myself and showcase my web skills.</p> -->
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div> 
-                        <div class="portfolio-entry">
-                            <h2>Title</h2>
-                            <i><h4>Languages go here</h4></i>
-                            <span class="tag" data-type="deprecated"></span>
-                            <br>
-                            <p></p>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>              
-                    </div>
-                    <div class="column" id="col-3">
-                        <div class="portfolio-entry">
-                            <h2>Home Server</h2>
-                            <i><h4>C, Raspberry Pi</h4></i>
-                            <span class="tag" data-type="delayed"></span>
-                            <br>
-                            <p>An ubuntu server hosted on a Raspberry pi hosting a web server, a file server, and a sequelDB.</p>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>
-                        <div class="portfolio-entry">
-                            <h2>Title</h2>
-                            <i><h4>Languages go here</h4></i>
-                            <span class="tag" data-type="secondary"></span>
-                            <br>
-                            <p>brief description can go here</p>
-                            <i style="display: flex; justify-content:center;">
-                            <p>centered links * go here</p>
-                            </i>
-                        </div>
+                    
+                    <div class="filter">
+                        <!-- <h3>Filter by:</h3> -->
+                        <select class="filter" id="filterby-tags" onchange="filter_code_portfolio(event, 'tags')">
+                            <option>All</option>
+                            <option>Deployed</option>
+                            <option>Progressing</option>
+                            <option>Delayed</option>
+                            <option>Secondary</option>
+                            <option>Deprecated</option>
+                            <option>Misc</option>
+                        </select>
+                        <select class="filter" id="filterby-languages" onchange="filter_code_portfolio(event, 'languages')">
+                            <option>All</option>
+                            <option>C</option>
+                            <option>CSS</option>
+                            <option>HTML</option>
+                            <option>JS</option>
+                            <option>Powershell</option>
+                            <option>Python</option>
+                            <option>Rust</option>
+                        </select>
                     </div>
                 </div>
+            
+                <br>
+
+                <div class="portfolio-section">
+                    <div class="column" id="col-1"></div>
+                    <div class="column" id="col-2"></div>
+                    <div class="column" id="col-3"></div>
+                </div>
+            
             </div>
             <div class="menu">
                 <h2>Menu</h2>
@@ -91,6 +67,8 @@
                     <li><a href="">Experience</a></li>
                     <li><a href="./bass_portfolio.html">Bass Portfolio</a></li>
                     <li><a href="./code_portfolio.html">Code Portfolio</a></li>
+                    <li><a href=./weekly_schedule.html>Weekly Schedule</a></li>
+                    <li><a href="./ideas.html">Lists</a></li>
                 </ul>
                 <h2>Contacts</h2>
                 <ul class="menu-list">

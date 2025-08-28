@@ -1,16 +1,33 @@
 [
-    {
-        "title": "",
-        "languages": [],
-        "tags": [],
+    {   "title": "Personal Website",
+        "languages": ["HTML", "CSS", "JS"],
+        "tag": "progressing",
         "description": "",
-        "links": []
+        "link": "https://github.com/Bens-Jammin/Demo-Site"
     },
-    {
-        "title": "",
-        "languages": [],
-        "tags": [],
+    {   "title": "Sequel",
+        "languages": ["Rust"],
+        "tag": "delayed",
         "description": "",
-        "links": []
+        "link": "https://github.com/Bens-Jammin/Sequel"
+    },
+    {   "title": "Home Lab",
+        "languages": ["Ubuntu","Raspberry PI"],
+        "tag": "secondary",
+        "description": "",
+        "link": ""
+    },
+    {   "title": "Server Microservices",
+        "languages": ["Python"],
+        "tag": "misc",
+        "description": "",
+        "link": ""
+    },
+    {   "title": "Finance Manager",
+        "languages": ["HTML","CSS","JS","Python"],
+        "tag": "secondary",
+        "description": "",
+        "link": ""
     }
+    
 ]

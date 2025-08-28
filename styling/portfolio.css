@@ -81,6 +81,12 @@ h1, h2 { margin: 25px 10px 15px 0; color: var(--dark-text-emph); font-weight: 60
     border-radius: 5px;
     padding: 3px 5px;
     border: 2px solid grey;
+    transform: scale(1);
+    transition: transform 0.3s ease, border-color 0.3s ease;}
+
+.portfolio-entry:hover {
+    transform: scale(1.05);
+    border-color: var(--dark-highlight-2);
 }
 
 .tag {
@@ -129,4 +135,62 @@ h1, h2 { margin: 25px 10px 15px 0; color: var(--dark-text-emph); font-weight: 60
 .tag[data-type="secondary"] { 
     background-color: var(--status-bkg-warning); 
     color: var(--status-txt-warning); 
+}
+
+.sort {
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+}
+.sort p { padding-right: 4px; }
+
+.sort input[type="radio"] { display: none; } /* hides the radio buttons / cirlces themselves */
+.sort label:hover { 
+    color: white;
+    border-color: white;
+}
+
+.sort label {   /* makes the labels look like the buttons */
+    padding: 6px 6px 0 6px;
+    font-size: 1.15em;
+    border-radius: 5px;
+    border: 2px solid var(--input-bdr);
+    background-color: var(--input-bkg);
+    color: var(--input-txt);
+    transition: all 0.2s ease;
+    margin:0 5px;
+    width: 150px;
+    height: 40px;
+    border: 1px solid var(--dark-text);
+    text-align: center;
+}
+.sort input[type="radio"]:checked + label {
+    background-color: var(--accent2);
+    color: white;
+    border-color: var(--dark-highlight-2);
+}
+
+.filter {
+    margin: 0 0 0 auto;
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    float: right;
+}
+.filter select {
+    margin: 0 5px;
+    font-family: inherit;
+    font-size: 1.15em;
+    width: 150px;
+    height: 40px;
+    background-color: var(--dark-bkg);
+    border: 2px solid var(--dark-text);
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+}
+
+.filter-sort {
+    display: flex;
+    flex-direction: row;
 }

@@ -1,14 +1,26 @@
 [
     {
-        "title": "",
-        "band": "",
-        "tags": [],
+        "title": "Bobcaygeon",
+        "band": "The Tragically Hip",
+        "tag": "progressing",
         "links": []
     },
     {
-        "title": "",
-        "band": "",
-        "tags": [],
+        "title": "The Luxury",
+        "band": "The Tragically Hip",
+        "tag": "progressing",
+        "links": []
+    },
+    {
+        "title": "Little Bones",
+        "band": "The Tragically Hip",
+        "tag": "misc",
+        "links": []
+    },
+    {
+        "title": "All Your Sins",
+        "band": "Pentagram",
+        "tag": "delayed",
         "links": []
     }
 ]
